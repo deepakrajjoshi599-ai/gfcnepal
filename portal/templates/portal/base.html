@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="ne">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}GFC Nepal Smart Forestry{% endblock %}</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="{% static 'portal/app.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="GFC Nepal home">
+      <img src="{% static 'portal/gfc-logo.jpeg' %}" alt="GFC Nepal logo">
+      <span>
+        <strong>GFC Nepal</strong>
+        <small>Smart Forestry Management System</small>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'services' %}">Services</a>
+      <a href="{% url 'about' %}">About</a>
+      <a href="{% url 'contact' %}">Contact</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a class="nav-button" href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a class="nav-button" href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}
+    </div>
+  {% endif %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Green Forest Conservation Pvt. Ltd.</strong>
+      <span>Darchula and Kailali, Nepal</span>
+    </div>
+    <div>
+      <a href="mailto:nepalgfc@gmail.com">nepalgfc@gmail.com</a>
+      <span>+977 9742382430</span>
+      <a href="https://www.facebook.com/profile.php?id=61580792623760">Facebook</a>
+    </div>
+  </footer>
+</body>
+</html>

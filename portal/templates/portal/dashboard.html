@@ -1,0 +1,63 @@
+{% extends "portal/base.html" %}
+{% block title %}Dashboard | GFC Nepal{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow" style="color:#0b6e4f">Dashboard</p>
+    <h2>Welcome, {{ user.get_username }}</h2>
+    <p class="small">Track analysis jobs, token use, saved reports, and recycle-bin state from one forestry operations desk.</p>
+
+    <div class="grid">
+      <div class="card"><h3>{{ active_count }}</h3><p>Active Work Items</p><span class="status-pill">Ready</span></div>
+      <div class="card"><h3>{{ recycle_count }}</h3><p>Recycle Bin</p><span class="status-pill">30 day review</span></div>
+      <div class="card"><h3>{{ token_count }}</h3><p>Used Tokens</p><span class="status-pill">Codepass log</span></div>
+    </div>
+
+    {% if promos %}
+      <div class="card">
+        <h3>Promo Offers</h3>
+        {% for promo in promos %}<p><b>{{ promo.code }}</b> - {{ promo.offer_text }}</p>{% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="split">
+      <div class="card">
+        <h3>Run Forestry Tools</h3>
+        <p>Open the service workbench to run inventory analysis, map reports, and operational planning jobs.</p>
+        <a class="button" href="{% url 'services' %}">Open Services</a>
+      </div>
+      <div class="card">
+        <h3>Expected Outputs</h3>
+        <ul class="tag-list"><li>PDF reports</li><li>Excel summaries</li><li>GIS maps</li><li>Word plans</li><li>Audit history</li></ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Work History</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Date</th><th>Tool</th><th>File</th><th>Status</th><th>Action</th></tr>
+          {% for work in works %}
+            <tr>
+              <td>{{ work.created_at|date:"Y-m-d H:i" }}</td>
+              <td>{{ work.title }}</td>
+              <td>{{ work.file_name }}</td>
+              <td><span class="status-pill">{{ work.status }}</span></td>
+              <td>
+                {% if work.status == "active" %}
+                  <form method="post" action="{% url 'delete_work' work.id %}">{% csrf_token %}<button class="danger">Move to Recycle</button></form>
+                {% endif %}
+                {% if work.status == "recycle_bin" %}
+                  <form method="post" action="{% url 'admin_recycle_work' work.id %}">{% csrf_token %}<button class="danger">Send to Admin Bin</button></form>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5">No work items yet. Start from Services to create your first forestry report.</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

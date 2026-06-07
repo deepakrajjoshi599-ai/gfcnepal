@@ -1,0 +1,54 @@
+{% extends "portal/base.html" %}
+{% block title %}Forestry Services | GFC Nepal{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow" style="color:#0b6e4f">Services</p>
+    <h2>Forestry Management Workbench</h2>
+    <p class="small">Choose a workflow to run token-protected analysis and generate a saved work history record.</p>
+
+    <div class="grid modules">
+      <article class="card">
+        <div class="module-icon">N</div>
+        <h3>Normal Forest</h3>
+        <p>Inventory analysis and operational planning aligned with Nepal forestry reporting needs.</p>
+        <a class="service-link" href="{% url 'tool' 'normal-analysis' %}">Inventory data analysis <span>Open</span></a>
+        <a class="service-link" href="{% url 'tool' 'maps-report' %}">Maps report <span>Open</span></a>
+        <a class="service-link" href="{% url 'tool' 'operational-plan' %}">Full operational plan <span>Open</span></a>
+      </article>
+      <article class="card">
+        <div class="module-icon">S</div>
+        <h3>Sustainable Forest</h3>
+        <p>Growing stock, harvestable stock, maps, and sustainable forest planning outputs.</p>
+        <a class="service-link" href="{% url 'tool' 'sustainable-analysis' %}">Inventory data analysis <span>Open</span></a>
+        <a class="service-link" href="{% url 'tool' 'maps-report' %}">GIS maps report <span>Open</span></a>
+        <a class="service-link" href="{% url 'tool' 'operational-plan' %}">Sustainable plan report <span>Open</span></a>
+      </article>
+      <article class="card">
+        <div class="module-icon">A</div>
+        <h3>Analytics Package</h3>
+        <p>Carbon assessment, biomass distribution, NDVI change detection, and land-cover classification.</p>
+        <ul class="tag-list"><li>Carbon dashboard</li><li>Forest carbon map</li><li>Change detection</li></ul>
+      </article>
+      <article class="card">
+        <div class="module-icon">C</div>
+        <h3>Conversion Tools</h3>
+        <p>Area, timber, plantation, harvest, seed requirement, basal area, and volume calculators.</p>
+        <ul class="tag-list"><li>Ropani to hectare</li><li>CFT to m³</li><li>Ton to kg</li></ul>
+      </article>
+      <article class="card">
+        <div class="module-icon">M</div>
+        <h3>Mobile Survey App</h3>
+        <p>Offline field data collection, GPS tracking, tree inventory, photo collection, and server sync.</p>
+        <ul class="tag-list"><li>Offline GPS</li><li>Photo records</li><li>Sync</li></ul>
+      </article>
+      <article class="card">
+        <div class="module-icon">U</div>
+        <h3>User Roles</h3>
+        <p>Administrator, forester, inventory team, GIS analyst, data entry operator, and client access lanes.</p>
+        <ul class="tag-list"><li>Audit logs</li><li>Backups</li><li>Notifications</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

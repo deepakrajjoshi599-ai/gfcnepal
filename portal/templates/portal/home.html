@@ -1,0 +1,105 @@
+{% extends "portal/base.html" %}
+{% block title %}GFC Nepal Smart Forestry Management System{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Digital Forestry Solutions for Nepal</p>
+      <h1>GFC Nepal Smart Forestry Management System</h1>
+      <p class="lead">वन व्यवस्थापन, forest inventory, GIS mapping, biomass and carbon analysis, operational plan preparation, wood technology, and forestry consultancy in one professional platform.</p>
+      <div class="hero-actions">
+        <a class="button" href="{% url 'services' %}">Start Inventory</a>
+        <a class="button secondary" href="#gis">Open GIS Map</a>
+        <a class="button secondary" href="#carbon">Carbon Calculator</a>
+        <a class="button secondary" href="{% url 'dashboard' %}">View Dashboard</a>
+      </div>
+    </div>
+    <aside class="metric-panel" aria-label="Platform preview">
+      <h2>Live Forestry Desk</h2>
+      <div class="map-preview">
+        <span>Sample plots</span>
+        <span>Boundary</span>
+        <span>NDVI</span>
+        <span>Road layer</span>
+        <span>River layer</span>
+      </div>
+      <div class="calc-output">
+        <div><span>Basal Area</span><b>0.159 m²</b></div>
+        <div><span>Volume</span><b>1.87 m³</b></div>
+        <div><span>Carbon Stock</span><b>2.46 tC</b></div>
+        <div><span>Status</span><b>Mature</b></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Core Forestry Modules</h2>
+    <p class="small">Built around field inventory, GIS evidence, carbon accounting, and report automation for Nepal's forestry workflows.</p>
+    <div class="grid modules">
+      <article class="card">
+        <div class="module-icon">F</div>
+        <h3>Forest Inventory</h3>
+        <p>Tree measurement, plot inventory, GPS capture, increment borer records, stock analysis, and report generation.</p>
+        <ul class="tag-list"><li>DBH</li><li>Height</li><li>Growing stock</li></ul>
+      </article>
+      <article id="gis" class="card">
+        <div class="module-icon">G</div>
+        <h3>GIS & Remote Sensing</h3>
+        <p>Boundary mapping, compartment delineation, satellite and topographic views, GeoJSON, KML, KMZ, GPX, and shapefile support.</p>
+        <ul class="tag-list"><li>Plot map</li><li>Forest layer</li><li>Google Earth</li></ul>
+      </article>
+      <article id="carbon" class="card">
+        <div class="module-icon">C</div>
+        <h3>Carbon & Biomass</h3>
+        <p>Above-ground biomass, below-ground biomass, total biomass, carbon stock, CO₂ equivalent, and sequestration trends.</p>
+        <ul class="tag-list"><li>AGB</li><li>BGB</li><li>CO₂e</li></ul>
+      </article>
+      <article class="card">
+        <div class="module-icon">O</div>
+        <h3>Operational Plan</h3>
+        <p>Guideline-based chapters for normal, scientific, collaborative, community, private, leasehold, and protected forests.</p>
+        <ul class="tag-list"><li>Harvest plan</li><li>Protection</li><li>Monitoring</li></ul>
+      </article>
+      <article class="card">
+        <div class="module-icon">W</div>
+        <h3>Wood Technology</h3>
+        <p>Planer, router, lathe, blade, RPM, feed rate, power, dust collection, PPE, and machine safety analysis.</p>
+        <ul class="tag-list"><li>RPM</li><li>Power</li><li>Safety</li></ul>
+      </article>
+      <article class="card">
+        <div class="module-icon">R</div>
+        <h3>Report Generator</h3>
+        <p>Inventory, growing stock, carbon, GIS, and operational plan exports for PDF, DOCX, Excel, Word, and map outputs.</p>
+        <ul class="tag-list"><li>PDF</li><li>Excel</li><li>DOCX</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap split">
+    <div>
+      <h2>Tree Measurement Tool</h2>
+      <p>Field teams can enter species, DBH, total height, merchantable height, and age to estimate basal area, volume, growing stock, MAI, and CAI.</p>
+      <div class="form-grid">
+        <p><label>Species</label><input value="Sal"></p>
+        <p><label>DBH (cm)</label><input value="45"></p>
+        <p><label>Total Height (m)</label><input value="24"></p>
+        <p><label>Merchantable Height (m)</label><input value="18"></p>
+      </div>
+    </div>
+    <div class="tool-panel">
+      <h3>Analysis Output</h3>
+      <div class="calc-output">
+        <div><span>Basal Area</span><b>0.159 m²</b></div>
+        <div><span>Volume</span><b>1.87 m³</b></div>
+        <div><span>Mean Annual Increment</span><b>0.042</b></div>
+        <div><span>Current Annual Increment</span><b>0.056</b></div>
+      </div>
+      <ul class="tag-list"><li>Diameter graph</li><li>Height graph</li><li>Species pie chart</li></ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

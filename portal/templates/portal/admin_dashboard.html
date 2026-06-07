@@ -1,0 +1,14 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<div class="wrap">
+  <div class="grid"><div class="card"><h3>{{ users|length }}</h3><p>Users</p></div><div class="card"><h3>{{ works|length }}</h3><p>Total Works</p></div><div class="card"><h3>{{ admin_bin|length }}</h3><p>Admin Recycle Bin</p></div></div>
+  <div class="grid">
+    <div class="card"><h2>Token / Codepass</h2><form method="post" action="{% url 'admin_send_token' %}">{% csrf_token %}<input type="email" name="email" placeholder="email" required><button>Generate</button></form></div>
+    <div class="card"><h2>Promo Code</h2><form method="post" action="{% url 'admin_add_promo' %}">{% csrf_token %}<input name="code" placeholder="PROMO2026" required><input name="offer_text" placeholder="Offer details" required><select name="scope"><option value="all">All users</option><option value="limited">Limited users</option></select><input name="limited_users" placeholder="username1, username2"><button>Add Promo</button></form></div>
+  </div>
+  <div class="card"><h2>User Activity</h2><div class="table-wrap"><table><tr><th>User</th><th>Email</th><th>Works</th><th>Staff</th></tr>{% for u in users %}<tr><td>{{ u.username }}</td><td>{{ u.email }}</td><td>{{ u.work_count }}</td><td>{{ u.is_staff }}</td></tr>{% endfor %}</table></div></div>
+  <div class="card"><h2>Token Use Log</h2><div class="table-wrap"><table><tr><th>Token</th><th>Email</th><th>Used By</th><th>Date</th></tr>{% for log in token_logs %}<tr><td>{{ log.token }}</td><td>{{ log.email }}</td><td>{{ log.used_by }}</td><td>{{ log.created_at|date:"Y-m-d H:i" }}</td></tr>{% endfor %}</table></div></div>
+  <div class="card"><h2>All Work Latest First</h2><div class="table-wrap"><table><tr><th>Date</th><th>User</th><th>Tool</th><th>Status</th><th>File</th></tr>{% for work in works %}<tr><td>{{ work.created_at|date:"Y-m-d H:i" }}</td><td>{{ work.user.username }}</td><td>{{ work.title }}</td><td>{{ work.status }}</td><td>{{ work.file_name }}</td></tr>{% endfor %}</table></div></div>
+  <div class="card"><h2>Admin Recycle Bin</h2><div class="table-wrap"><table><tr><th>Date</th><th>User</th><th>Tool</th><th>File</th></tr>{% for work in admin_bin %}<tr><td>{{ work.updated_at|date:"Y-m-d H:i" }}</td><td>{{ work.user.username }}</td><td>{{ work.title }}</td><td>{{ work.file_name }}</td></tr>{% endfor %}</table></div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "portal/base.html" %}
+{% block title %}Login | GFC Nepal{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <div class="card" style="max-width:520px">
+      <h2>Login</h2>
+      <form method="post">{% csrf_token %}{{ form.as_p }}<button>Login</button></form>
+      <p class="small">New user? <a href="{% url 'signup' %}">Create account</a></p>
+    </div>
+  </div>
+</section>
+{% endblock %}

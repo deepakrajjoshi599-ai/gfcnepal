@@ -1,0 +1,31 @@
+{% extends "portal/base.html" %}
+{% block title %}{{ title }} | GFC Nepal{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap split">
+    <div class="card">
+      <p class="eyebrow" style="color:#0b6e4f">Codepass Tool</p>
+      <h2>{{ title }}</h2>
+      <p>A one-time Codepass token is required before this forestry workflow is saved into your work history.</p>
+      <form method="post">
+        {% csrf_token %}
+        <p>
+          <label for="codepass_token">Codepass / Token</label>
+          <input id="codepass_token" name="codepass_token" required placeholder="Enter token from administrator">
+        </p>
+        <button>Run Tool</button>
+      </form>
+    </div>
+    <aside class="tool-panel">
+      <h3>Workflow Preview</h3>
+      <p class="small">The current connector records the job and preserves the place where Excel, GIS, PDF, Word, and operational plan generators can be attached.</p>
+      <ul class="tag-list">
+        <li>Token validation</li>
+        <li>Work history save</li>
+        <li>Report export ready</li>
+        <li>Audit trace</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+{% endblock %}
