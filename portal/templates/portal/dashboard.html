@@ -1,0 +1,18 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<div class="wrap">
+  <div class="grid">
+    <div class="card"><h3>{{ active_count }}</h3><p>Active काम</p></div>
+    <div class="card"><h3>{{ recycle_count }}</h3><p>Recycle Bin</p></div>
+    <div class="card"><h3>{{ token_count }}</h3><p>Used Tokens</p></div>
+  </div>
+  {% if promos %}<div class="card"><h2>Promo Offers</h2>{% for promo in promos %}<p><b>{{ promo.code }}</b> - {{ promo.offer_text }}</p>{% endfor %}</div>{% endif %}
+  <div class="card"><h2>Services Tools</h2><a class="nav" href="{% url 'services' %}">Open Services</a></div>
+  <div class="card"><h2>काम History</h2><table><tr><th>मिति</th><th>Tool</th><th>File</th><th>Status</th><th>Action</th></tr>
+    {% for work in works %}<tr><td>{{ work.created_at|date:"Y-m-d H:i" }}</td><td>{{ work.title }}</td><td>{{ work.file_name }}</td><td>{{ work.status }}</td><td>
+      {% if work.status == "active" %}<form method="post" action="{% url 'delete_work' work.id %}">{% csrf_token %}<button class="danger">Delete</button></form>{% endif %}
+      {% if work.status == "recycle_bin" %}<form method="post" action="{% url 'admin_recycle_work' work.id %}">{% csrf_token %}<button class="danger">Admin Recycle Bin</button></form>{% endif %}
+    </td></tr>{% empty %}<tr><td colspan="5">अहिले कुनै काम छैन।</td></tr>{% endfor %}
+  </table></div>
+</div>
+{% endblock %}

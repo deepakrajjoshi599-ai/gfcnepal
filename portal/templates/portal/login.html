@@ -1,0 +1,7 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<div class="wrap"><div class="card"><h2>Login</h2>
+  <form method="post">{% csrf_token %}{{ form.as_p }}<button>Login</button></form>
+  <p><a href="{% url 'signup' %}">Create account</a></p>
+</div></div>
+{% endblock %}

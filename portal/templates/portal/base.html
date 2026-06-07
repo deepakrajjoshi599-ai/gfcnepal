@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="ne">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}GFC Nepal{% endblock %}</title>
+  <style>
+    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Arial,sans-serif;background:#f5f8f2;color:#17251c;min-height:100vh;display:flex;flex-direction:column}.top{display:flex;align-items:center;gap:16px;padding:14px 28px;background:#fff;border-bottom:1px solid #dfe8dc;position:sticky;top:0;z-index:2}.logo{width:76px;height:76px;object-fit:contain;border:1px solid #d7e2d7;background:#fff}.brand h1{margin:0;color:#14643d;font-size:2rem}.brand p{margin:2px 0;color:#587063}.nav{margin-left:auto;display:flex;gap:12px;flex-wrap:wrap}.nav a,.lang,button{border:0;background:#14643d;color:white;padding:9px 14px;border-radius:8px;text-decoration:none;font-weight:700;cursor:pointer}main{flex:1}.hero{position:relative;min-height:520px;padding:64px 28px;overflow:hidden}.hero::before{content:"";position:absolute;inset:0;background-size:cover;background-position:center;animation:gfcSlide 24s infinite;filter:saturate(1.05)}.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(245,248,242,.96),rgba(245,248,242,.78),rgba(245,248,242,.38))}.hero>.wrap{position:relative;z-index:1}.wrap{max-width:1120px;margin:auto;padding:28px 16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:rgba(255,255,255,.94);border:1px solid #dfe8dc;border-radius:8px;padding:18px;margin-bottom:16px;backdrop-filter:blur(2px)}.card h3{margin:0 0 8px;color:#14643d}.small{font-size:.84rem;color:#64756a}.tools a{display:block;color:#14643d;font-weight:700;margin:8px 0}.footer{background:#102418;color:white;padding:24px 28px;margin-top:auto}.footer a{color:#9df0b7}.messages{max-width:1120px;margin:16px auto 0;padding:0 16px}.message{background:#e7f6e9;border:1px solid #b8dfc1;border-radius:8px;padding:12px;margin-bottom:8px}table{width:100%;border-collapse:collapse}td,th{padding:9px;border-bottom:1px solid #e4ece4;text-align:left}.danger{background:#9b1c1c}@keyframes gfcSlide{0%,22%{background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')}25%,47%{background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80')}50%,72%{background-image:url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1800&q=80')}75%,100%{background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1800&q=80')}}.ne [data-en]{display:none}.en [data-ne]{display:none}@media(max-width:700px){.top{align-items:flex-start;flex-wrap:wrap}.nav{margin-left:0}.brand h1{font-size:1.45rem}.hero{min-height:620px;padding:38px 18px}}
+  </style>
+</head>
+<body class="ne">
+  <div class="top">
+    <img class="logo" src="{% static 'portal/gfc-logo.jpeg' %}" alt="GFC logo">
+    <div class="brand"><h1>GFC Nepal</h1><p>Green Forest Conservation Pvt. Ltd.</p></div>
+    <div class="nav">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'services' %}">Services</a>
+      <a href="{% url 'contact' %}">Contact</a>
+      {% if user.is_authenticated %}<a href="{% url 'dashboard' %}">Dashboard</a>{% else %}<a href="{% url 'login' %}">Login</a>{% endif %}
+      <button class="lang" type="button" onclick="document.body.className=document.body.className==='ne'?'en':'ne'">नेपाली / English</button>
+    </div>
+  </div>
+  {% if messages %}<div class="messages">{% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}</div>{% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  <div class="footer">
+    <b>Facebook:</b> <a href="https://www.facebook.com/profile.php?id=61580792623760">GFC Nepal</a> |
+    <b>Contact/WhatsApp:</b> +977 9742382430 |
+    <b>Email:</b> nepalgfc@gmail.com<br>
+    Copyright: ©2026 Green Forest Conservation Pvt. Ltd. All right reseved.
+  </div>
+</body>
+</html>

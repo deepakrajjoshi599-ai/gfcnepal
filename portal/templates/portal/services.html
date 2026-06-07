@@ -1,0 +1,12 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<section class="hero"><div class="wrap">
+  <h2>Services</h2>
+  <div class="grid tools">
+    <div class="card"><h3>Normal Forest</h3><a href="{% url 'tool' 'normal-analysis' %}">Inventory data analysis report</a><a href="{% url 'tool' 'maps-report' %}">Maps report</a><a href="{% url 'tool' 'operational-plan' %}">Full Normal Forest Operational plan report</a></div>
+    <div class="card"><h3>Sustainable Forest</h3><a href="{% url 'tool' 'sustainable-analysis' %}">Inventory data analysis report</a><a href="{% url 'tool' 'maps-report' %}">Maps report</a><a href="{% url 'tool' 'operational-plan' %}">Full Sustainable Forest Operational plan report</a></div>
+    <div class="card"><h3>Packaging</h3><p>Environmental Study & Research</p><p>GIS / Mapping Services</p><p>Technical Field Support</p></div>
+  </div>
+  <p class="small">Operational Plan Preparation guideline 2061</p>
+</div></section>
+{% endblock %}

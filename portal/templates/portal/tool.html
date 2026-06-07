@@ -1,0 +1,11 @@
+{% extends "portal/base.html" %}
+{% block content %}
+<div class="wrap"><div class="card">
+  <h2>{{ title }}</h2>
+  <p class="small">यो Django + GeoDjango version मा tool चलाउन admin बाट पाएको one-time Codepass/Token चाहिन्छ।</p>
+  <form method="post">{% csrf_token %}
+    <p><label>Codepass / Token</label><br><input name="codepass_token" required style="padding:10px;width:100%;max-width:420px"></p>
+    <button>Run Tool</button>
+  </form>
+</div></div>
+{% endblock %}
