@@ -39,14 +39,14 @@ except Exception:
 
 
 CRS_EPSG = "EPSG:32644"
-DEFAULT_DEM_PATH = r"F:\aaaaa_Python\maps.dem\Nepal.tif"
+DEFAULT_DEM_PATH = "/home/ubuntu/gfcnepal/dem/Nepal.tif"
 DEM_BUFFER_M = 10
 CRS_OPTIONS = {
     "EPSG:32644": "CRS Name: WGS 84 / UTM zone 44N\nEPSG:32644",
     "EPSG:32645": "CRS Name: WGS 84 / UTM zone 45N\nEPSG:32645",
 }
 
-NORTH_ARROW_IMAGE = r"C:\Users\deepa\Downloads\North-Arrow-PNG-Images-HD.png"
+NORTH_ARROW_IMAGE = "/home/ubuntu/gfcnepal/static/north_arrow.png"
 
 ALLOWED_MAPS = [
     "boundary_map",
@@ -320,7 +320,62 @@ def setup_axes(ax, blocks):
 
 
 def add_title_band(fig, map_key, forest_name, address):
-    return
+    """Pillow ले Nepali title (forest name, address) र English map title render गर्छ"""
+    from PIL import Image, ImageDraw, ImageFont
+    import numpy as np
+
+    map_title = MAP_TITLES.get(map_key, map_key)
+    line1 = "{}, {}".format(forest_name, address)   # Nepali - Noto Devanagari
+    line2 = map_title                                 # English - Times New Roman
+
+    # Font paths
+    nep_bold   = "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf"
+    nep_reg    = "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf"
+    eng_bold   = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf"
+    eng_reg    = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf"
+
+    # Fallbacks
+    if not os.path.exists(nep_bold):   nep_bold  = nep_reg
+    if not os.path.exists(nep_reg):    nep_reg   = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+    if not os.path.exists(eng_bold):   eng_bold  = nep_bold
+    if not os.path.exists(eng_reg):    eng_reg   = nep_reg
+
+    fig_width_inch, fig_height_inch = fig.get_size_inches()
+    dpi = fig.dpi
+    fig_w_px = int(fig_width_inch * dpi)
+
+    # Font sizes proportional to figure width
+    f1 = max(24, int(fig_w_px * 0.032))   # Nepali line (forest name, address)
+    f2 = max(20, int(fig_w_px * 0.024))   # English line (map title)
+    band_h = f1 + f2 + 50
+
+    img  = Image.new("RGBA", (fig_w_px, band_h), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font1 = ImageFont.truetype(nep_bold, f1)
+    except Exception:
+        font1 = ImageFont.load_default()
+    try:
+        font2 = ImageFont.truetype(eng_bold, f2)
+    except Exception:
+        font2 = ImageFont.load_default()
+
+    # Center line1 (Nepali)
+    bb1 = draw.textbbox((0, 0), line1, font=font1)
+    w1  = bb1[2] - bb1[0]
+    draw.text(((fig_w_px - w1) // 2, 10), line1, font=font1, fill=(0, 0, 0, 255))
+
+    # Center line2 (English)
+    bb2 = draw.textbbox((0, 0), line2, font=font2)
+    w2  = bb2[2] - bb2[0]
+    draw.text(((fig_w_px - w2) // 2, f1 + 20), line2, font=font2, fill=(50, 50, 50, 255))
+
+    # Place band at top of figure
+    frac = band_h / (fig_height_inch * dpi)
+    ax_title = fig.add_axes([0.0, 1.0 - frac, 1.0, frac])
+    ax_title.axis("off")
+    ax_title.imshow(np.array(img), aspect="auto", interpolation="bilinear")
 
 
 def add_north_arrow(ax):
@@ -694,7 +749,7 @@ def generate_selected_maps(input_file, selected_maps, forest_name, address, outp
 
 if __name__ == "__main__":
     generate_selected_maps(
-        input_file=r"F:\aaaaa_Python\maps.dem\Boundary\BoundaryCF.xlsx",
+        input_file=r"/home/ubuntu/gfcnepal/BoundaryCF.xlsx",
         selected_maps=[
             "boundary_map",
             "elevation_map",
@@ -704,9 +759,9 @@ if __name__ == "__main__":
         ],
         forest_name="",
         address="",
-        output_dir=r"F:\aaaaa_Python\maps.dem\output",
+        output_dir=r"/home/ubuntu/gfcnepal/output",
         crs_epsg="EPSG:32645",
-        dem_path=r"F:\aaaaa_Python\maps.dem\Nepal.tif",
+        dem_path=r"/home/ubuntu/gfcnepal/dem/Nepal.tif",
     )
 
     print("Maps generated successfully.")
