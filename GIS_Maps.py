@@ -316,7 +316,7 @@ def setup_axes(ax, blocks):
         labelrotation=90,
     )
     for spine in ax.spines.values():
-        spine.set_linewidth(0.7)
+        spine.set_visible(False)
 
 
 def add_title_band(fig, map_key, forest_name, address):
@@ -399,8 +399,10 @@ def add_scale_bar(fig, length_m=500):
 
 
 def add_crs_text(fig, crs_epsg=CRS_EPSG):
+    from matplotlib.font_manager import FontProperties
+    eng_font = FontProperties(fname="/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf") if os.path.exists("/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf") else FontProperties()
     crs_epsg = normalize_crs(crs_epsg)
-    fig.text(0.650, 0.120, get_crs_text(crs_epsg), ha="left", va="bottom", fontsize=6.3)
+    fig.text(0.650, 0.120, get_crs_text(crs_epsg), ha="left", va="bottom", fontsize=6.3, fontproperties=eng_font)
 
 
 def add_area_table(fig, labels, areas_ha, title="Area Table", col1="Class", col2="Area", position=None):
@@ -427,18 +429,25 @@ def add_area_table(fig, labels, areas_ha, title="Area Table", col1="Class", col2
 
 
 def add_boundary_legend(fig):
+    from matplotlib.font_manager import FontProperties
+    eng_font = FontProperties(fname="/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf") if os.path.exists("/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf") else FontProperties()
+    eng_bold = FontProperties(fname="/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf") if os.path.exists("/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf") else FontProperties()
     handles = [
-        Line2D([0], [0], marker="o", color="black", linestyle="", markersize=4, label="Survey points"),
-        Patch(facecolor="white", edgecolor="black", label="Forest boundary"),
+        Line2D([0], [0], marker="o", color="black", linestyle="", markersize=4, label="Survey Points"),
+        Patch(facecolor="white", edgecolor="black", label="Forest Boundary"),
     ]
-    fig.legend(handles=handles, title="Legend", loc="lower left", bbox_to_anchor=(0.105, 0.095), frameon=False, prop=nep_font(), title_fontproperties=nep_font(True), fontsize=7)
+    fig.legend(handles=handles, title="Legend", loc="lower left", bbox_to_anchor=(0.105, 0.095), frameon=False, prop=eng_font, title_fontproperties=eng_bold, fontsize=7)
 
 
 def add_block_legend(fig, blocks, title="Legend", colors=None, labels=None, position=None, ncol=2):
+    from matplotlib.font_manager import FontProperties
+    eng_font = FontProperties(fname="/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf") if os.path.exists("/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf") else FontProperties()
+    eng_bold = FontProperties(fname="/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf") if os.path.exists("/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf") else FontProperties()
+    nep_font_prop = nep_font()
     colors = colors or BLOCK_COLORS
     labels = labels or [str(row["block"]) for _, row in blocks.iterrows()]
     handles = [Patch(facecolor=colors[i % len(colors)], edgecolor="black", label=labels[i]) for i in range(min(len(colors), len(labels)))]
-    fig.legend(handles=handles, title=title, loc="lower left", bbox_to_anchor=position or (0.105, 0.090), frameon=False, ncol=ncol, prop=nep_font(), title_fontproperties=nep_font(True), fontsize=7, borderaxespad=0, columnspacing=0.75, handlelength=1.0)
+    fig.legend(handles=handles, title=title, loc="lower left", bbox_to_anchor=position or (0.105, 0.090), frameon=False, ncol=ncol, prop=nep_font_prop, title_fontproperties=eng_bold, fontsize=7, borderaxespad=0, columnspacing=0.75, handlelength=1.0)
 
 
 def class_areas_ha(class_data, class_count, pixel_x, pixel_y, target_total_ha=None):
